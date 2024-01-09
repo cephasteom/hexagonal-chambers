@@ -14,20 +14,20 @@ states[0].map((_,i) =>
 
 z.p.energy.midicc(0,10,0)
 z.p.space.cc(1,10,0)
-z.p.fx0.cc(2,10,1)
-z.p.fx1.cc(3,10,1)
+z.p.fx0level.cc(2,10,1)
+z.p.fx1level.cc(3,10,1)
 z.e.set(1)
 z.m.set(1)
 
 fx0.set({re:1, rsize:0.75, rdamp:0.5,_track:6})
 fx0.p.rtail(z.p.space)
-fx0.p._level(z.p.fx0)
+fx0.p._level(z.p.fx0level)
 fx0.e(1)
 
 fx1.set({de:1, _track: 7})
 fx1.p.dtime(z.p.space).mtr(1.5,3.5).step(0.5).btms()
 fx1.p.dfb(z.p.space)
-fx1.p._level(z.p.fx1)
+fx1.p._level(z.p.fx1level)
 fx1.e(1)
 
 s0.set({in:2,ba:'design',res:0.1})
@@ -68,4 +68,3 @@ s5.px._locut.saw(0.25,0.75)
 s5.py.n.v('Cdor%16..*16')
 s5.px._pan.saw()
 s5.p.begin.saw(0,0.5,0,1/4)
-

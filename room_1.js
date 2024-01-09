@@ -19,20 +19,20 @@ states[0].map((_,i) =>
 
 z.p.energy.midicc(0,10,0)
 z.p.space.cc(1,10,0)
-z.p.fx0.cc(2,10,1)
-z.p.fx1.cc(3,10,1)
+z.p.fx0level.cc(2,10,1)
+z.p.fx1level.cc(3,10,1)
 z.e.set(1)
 z.m.set(1)
 
 fx0.set({re:1, rsize:0.75, rdamp:0.5,_track:6})
 fx0.p.rtail(z.p.space)
-fx0.p._level(z.p.fx0)
+fx0.p._level(z.p.fx0level)
 fx0.e(1)
 
 fx1.set({de:1, _track: 7})
 fx1.p.dtime(z.p.space).mtr(1.5,3.5).step(0.5).btms()
 fx1.p.dfb(z.p.space)
-fx1.p._level(z.p.fx1)
+fx1.p._level(z.p.fx1level)
 fx1.e(1)
 
 s0.set({inst:'2',bank:'breaks.archn',_snap:q*loop,cut:[2,3],fx0:1/8,d:ms(1/4),s:0.125,cutr:ms(1/2)})
