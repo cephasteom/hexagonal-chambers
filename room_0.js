@@ -2,6 +2,11 @@ const { states, amps, values } = d.book_1
 let hits = floor(states.length)
 let smoothing = 4
 
+s6.set({inst:1,ba:'vox.babel',dur:ms(32),lc:0.3,vol:0.25,cut:6})
+s6.p.i(5)
+// s6.solo.set(1)
+// s6.e.once()
+
 states[0].map((_,i) => 
   streams[i]
     .set({cut:i,i})
@@ -45,14 +50,14 @@ s0.p.begin.random().step(1/8)
 s0.m.reset().set(1)
 s0.e.reset().every(q*4)
 
-s3.set({in:2,ba:'rumble',dur:ms(16),snap:q*16,n:48,i:4,lag:ms(smoothing),a:10,
+s1.set({in:2,ba:'rumble',dur:ms(16),snap:q*16,n:48,i:4,lag:ms(smoothing),a:10,
 r:500,fx0:1})
-s3.px._cutoff.saw(100,400).$mul.set(z.p.energy).mtr(1,8)
-s3.p._res.set(z.p.energy).mtr(0.5,0.1)
-s3.px._grainrate.saw(4,12,1)
-s3.py._grainsize.saw()
-s3.p.begin.saw(0,1,0,1/16)
-s3.e.reset().every(q*2)
+s1.px._cutoff.saw(100,400).$mul.set(z.p.energy).mtr(1,8)
+s1.p._res.set(z.p.energy).mtr(0.5,0.1)
+s1.px._grainrate.saw(4,12,1)
+s1.py._grainsize.saw()
+s1.p.begin.saw(0,1,0,1/16)
+s1.e.reset().every(q*2)
 
 s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
