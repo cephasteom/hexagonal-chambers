@@ -1,4 +1,4 @@
-const { states, amps, values } = d.book_0
+const { states, amps, values } = d.book_3
 let hits = floor(states.length)
 let smoothing = 4
 
@@ -86,5 +86,17 @@ s3.p.n('Dmi').sub(12)
 s3.py._modi.saw(1,2).$mul.set(z.p.energy).mtr(1,4)
 s3.solo.set(s0.solo)
 
+// air
+s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1})
+s4.py._pan.saw(0.3,0.7)
+s4.p.begin.saw(0,1,0,1/2)
+s4.p._vol.$mul.set(2)
+s4.e.reset().every(q)
 
-
+s5.set({in:1,ba:'atmos',dur:ms(2),i:0,lag:ms(smoothing),
+fx0:1,fx1:1,cutr:ms(0.5),loop:1,level:0.25})
+s5.p._vol.mtr(0,0.5)
+s5.p.n.set('65|60|65')
+s5.px._pan.saw()
+s5.px.a.saw(0.1,4).btms()
+s5.p.begin.saw(0,0.5,0,1)

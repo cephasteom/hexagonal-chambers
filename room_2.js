@@ -1,7 +1,7 @@
 const { states, amps, values } = d.book_0
 let hits = floor(states.length)
 let smoothing = 4
-let offset = 1
+let offset = 0
 
 let loop = 3
 z.t.saw(0,q*loop*2,1,1/(loop*2));
@@ -36,20 +36,9 @@ fx1.p.dfb(z.p.space)
 fx1.p._level(z.p.fx1level)
 fx1.e.every(3);
 
-s0.set({in:`1?2*16|*${loop}`,ba:'gm.drums?fd.100*8',res:0.1,cut:[1,2,3,4,5],snap:q})
-s0.p.i.random(0,16,1)
-s0.px._grainrate.saw(4,12,1)
-s0.py._grainsize.saw(1/4,1/12)
-s0.px._rate.saw(0.5,1,0.25)
-s0.py._fx1.saw(0,.5)
-s0.py.dur.saw(4,16,1).btms()
-s0.p._pan.noise()
-s0.p.begin.random().step(1/8)
-s0.m.reset().set(1)
-
 s3;
 [s3,s4,s5].map((stream,i) => {
-  stream.set({inst:[1,0],ba:'ma.808?bd*16',lag:ms(smoothing),mods:0.1,moda:0,modd:ms(1),s:0.125,r:ms(4),res:0.125})
+  stream.set({inst:[1,0],ba:'ma.808?bd*16',lag:ms(smoothing),mods:0.1,moda:0,modd:ms(1),s:0.125,r:ms(4),res:0.125,track:3})
   stream.p._n(`Daeo%16..?*16|*${loop} Bblyd%16..?*16|*${loop}`).add(0).sub(i*12)
   stream.p._level.add(i*12).noise()
   stream.p._cutoff.set(z.p.space).mtr(5000,2000)
@@ -65,7 +54,3 @@ s3;
   stream.m.reset().set('1?0*16')
 })
 
-s6.set({inst:1,ba:'vox.babel',dur:ms(32),lc:0.3,vol:0.25,cut:[0,1,2,3,4,5]})
-s6.p.i(9)
-// s6.solo.set(1)
-// s6.e.once()

@@ -2,15 +2,10 @@ const { states, amps, values } = d.book_0
 let hits = floor(states.length)
 let smoothing = 4
 
-s6.set({inst:1,ba:'vox.babel',dur:ms(32),lc:0.3,vol:0.25,cut:6})
-s6.p.i(6)
-// s6.solo.set(1)
-// s6.e.once()
-
 z.bpm.set(180)
 let loop = 3
 // z.seed('18')
-// z.t.saw(0,q*loop,0,1/loop)
+z.t.saw(0,q*loop,0,1/loop)
   // .add(q)
 
 states[0].map((_,i) => 
