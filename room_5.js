@@ -59,7 +59,7 @@ s5.set({in:1,ba:'atmos',dur:ms(2),i:'4?5*16',lag:ms(smoothing),
   level:0.5,
   a:ms(1/8)
 })
-s5.p.n.set('65|60|65')
+s5.p.n.set('65|60|65').sub(5)
 s5.px._pan.saw()
 s5.px.a.saw(0.1,4).btms()
 s5.p.begin.saw(0,1,0,1)
