@@ -1,3 +1,4 @@
+// ROOM 0
 const { states, amps, values } = d.book_1
 let hits = floor(states.length)
 let smoothing = 4
@@ -43,7 +44,6 @@ s0.py.dur.saw(4,16,1).btms()
 s0.p._pan.noise()
 s0.p.begin.random().step(1/8)
 s0.m.reset().set(1)
-// s0.e.reset().every(q*4)
 
 s1.set({in:2,ba:'rumble',dur:ms(16),snap:q*16,n:49,i:4,lag:ms(smoothing),a:10,
 r:500,fx0:1})
