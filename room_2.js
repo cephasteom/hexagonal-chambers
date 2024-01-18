@@ -25,7 +25,7 @@ z.p.fx1level.cc(3,10,1)
 z.e.set(1)
 z.m.set(1)
 
-fx0({reverb:1,rtail:1,vol:0.5,rsize:1,rdamp:0,rspread:1,_track:6,hicut:0.5})
+fx0({reverb:1,rtail:1,vol:0.5,rsize:1,rdamp:0,rspread:1,_track:6})
 fx0.p.level.noise(0.5,1,0,0.433)
 fx0.p.rtail(z.p.space)
 fx0.p._level(z.p.fx0level)
@@ -53,7 +53,6 @@ fx1.e.every(3);
 })
 
 s5.set({in:1,ba:'gm.static',dur:ms(2),i:3,lag:ms(smoothing),fx0:1,fx1:1})
-s5.px._locut.saw(0.25,0.75)
 s5.py.n.v('Cdor%16..*16')
 s5.px._pan.saw()
 s5.p.begin.saw(0,0.5,0,1/4)

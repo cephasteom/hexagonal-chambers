@@ -36,6 +36,7 @@ fx1.e(1)
 
 s0.t.saw(0,q*loop,0,1/loop)
 s0.set({inst:2,bank:'breaks.hp',_snap:q*loop,cut:2,fx0:1/8,d:ms(1/4),s:0.25,cutr:ms(1/2),r:ms(2),res:0.8})
+s0.p._vol.mul(0.5)
 s0.p.i.random(0,6,1)
 s0.p.n.set('50 Dmi%6..?*15')
 s0.p.cutoff.set(z.p.energy).mtr(400,10000)
@@ -61,7 +62,6 @@ s1.p._pan.noise(0.25,0.75,0,1/3)
 s1.p._vol.mul(4)
 s1.e.reset().every(1)
 
-// bass
 s2.t.saw(0,q*loop,0,1/loop)
 s2.set({inst:6,r:ms(4),vol:0.125})
 s2.p.dist(z.p.energy).mtr(0,0.25)
@@ -78,14 +78,11 @@ s2.m.reset().set(1)
 s2.solo.set(s0.solo)
 s2.mute.set(s0.mute)
 
-// fm
-s3({inst:0,fx0:1,fx1:1,level:0.5,dur:ms(2),a:ms(4),cut:3,lag:ms(4),moda:ms(4),lc:0.5,strum:ms(1)})
+s3({inst:0,fx0:1,fx1:1,level:0.5,dur:ms(2),a:ms(4),cut:3,lag:ms(4),moda:ms(4),strum:ms(1),lc:0.5})
 s3.p.n('Dmi').sub(12)
-// s3.px._harm.saw(1,7,1).add(0.1)
 s3.py._modi.saw(1,2).$mul.set(z.p.energy).mtr(1,4)
 s3.solo.set(s0.solo)
 
-// air
 s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1})
 s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
