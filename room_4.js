@@ -4,8 +4,6 @@ let smoothing = 4
 
 z.bpm.set(160)
 let loop = 4
-// z.bpm.sine(220,180,0,1/loop)
-// z.t.saw(0,q*loop,0,1/loop)
 
 states[0].map((_,i) => 
   streams[i]

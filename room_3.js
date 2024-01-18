@@ -1,12 +1,7 @@
 const { states, amps, values } = d.book_1
 let hits = floor(states.length)
 let smoothing = 1
-let offset = 2
-
-s6.set({inst:1,ba:'vox.babel',dur:ms(32),lc:0.3,vol:0.25,cut:6})
-s6.p.i(7)
-// s6.solo.set(1)
-// s6.e.once()
+let offset = 0
 
 states[0].map((_,i) => 
   streams[i]
@@ -37,13 +32,13 @@ fx1.p._level(z.p.fx1level)
 fx1.e(1)
 
 s0.set({in:2,ba:'bd',dur:ms(4),s:0.125,grainrate:32,fx1:0.25,level:0,begin:0.9,hc:0.5})
-s0.p.fx0.set(z.p.energy).mtr(0.25,1)
+s0.p.fx0.set(z.p.energy).mtr(0.5,2)
 s0.p.a.set(z.p.energy).mtr(2,1).btms()
 s0.px.i.random(0,32,1)
 s0.p.rate(-0.5)
 s0.e.$and.every('2?3*16|*2')
 
-s1.set({in:2,ba:'glass',s:0.125,snap:q*2,dur:ms(4),lc:0.5,a:ms(1),de:1,dtime:ms(1/16),dfb:0.8})
+s1.set({in:2,ba:'glass',s:0.25,snap:q*2,dur:ms(4),lc:0.5,a:ms(1),de:1,dtime:ms(1/16),dfb:0.8})
 s1.px.dcolour.set(z.p.energy).mtr(0.5,0.75)
 s1.px.i.noise(0,16,1)
 s1.py.begin.random()

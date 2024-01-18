@@ -1,16 +1,13 @@
 const { states, amps, values } = d.book_0
 let hits = floor(states.length)
-let smoothing = 4
+let smoothing = 2
 
 z.bpm.set(180)
 let loop = 3
-// z.seed('18')
 z.t.saw(0,q*loop,0,1/loop)
-  // .add(q)
 
 states[0].map((_,i) => 
   streams[i]
-    .set({cut:i,i})
     .x.v(t => s - (values[t%hits] * s))._
     .y.v(t => amps[t%hits][i] * s)._
     .e.v(t => +states[t%hits][i])._
@@ -44,25 +41,31 @@ s0.px.begin.noise().gt(0.5).if(0).$else.t().noise().step(0.125)
 s0.mute.noise(0,1).$gt.set(z.p.energy)
 s0.solo.noise(0,1).$lt.set(z.p.energy)
 
-s1.set({inst:2,bank:'gm.sine',cut:[0],dur:ms(1),fx0:0.25,_grainsize:1/6,grainrate:8,locut:0.5})
+s1.set({inst:2,bank:'gm.sine',cut:[0],dur:ms(1)})
 s1.p._vol.mul(0.5)
-s1.p.i.random(0,16,1)
+s1.p.i.random(0,12,1)
 s1.p._pan.noise()
-s1.p.begin.saw(0,1,1/12,1/16)
+s1.px.begin.saw(0,1,1/8,1/8)
+s1.px._grainsize.saw(1/6,1/16)
+s1.px._grainrate.saw(6,32)
+s1.py._rate.saw(1,4).mul(-1)
+s1.py._level.saw()
+s1.py._fx0.saw(1,0)
+s1.py.a.saw(0,2).btms()
 s1.p.$and.every(3)
 
 // bass
 s2.set({inst:6,ring:0,dur:ms(2),r:ms(4),lforate:1,lfodepth:0,fat:0.25})
-s2.p.n.set(34)
-s2.p._vol.mul(0.25)
-s2.py.modi.saw(0.5,5)
+s2.p.n.set(38)
+s2.p._vol.mul(0.5)
 s2.e.reset().set(s0.e).$and.c().mod(loop).lt(loop - 1)
 s2.m.reset().set(1)
 s2.solo.set(s0.solo)
 s2.mute.set(s0.mute)
 
-s3.set({inst:1,bank:'metal.vlong1',dur:ms(4),fx1:1,r:ms(1),lc:0.25,d:ms(1/4),snap:q*loop})
+s3.set({inst:1,bank:'metal.vlong1',dur:ms(4),fx0:1,fx1:1,r:ms(1),d:ms(1/4)})
 s3.p.i.random(0,16,1)
 s3.px.begin.saw(0,1,1/8,1/16)
-s3.px.s.set(z.p.intensity).mtr(0.25,0.7)
-s3.e.$and.not(s1.e).$and.every(7)
+s3.p.s.set(z.p.intensity).mtr(0.75,0.25)
+s3.p._level.set(1).sub(s1.py._level)
+s3.p._pan.set(1).sub(s1.p._pan)

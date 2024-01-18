@@ -2,25 +2,19 @@ const { states, amps, values } = d.book_1
 let hits = floor(states.length)
 let smoothing = 4
 
-s6.set({inst:1,ba:'vox.babel',dur:ms(32),lc:0.3,vol:0.25,cut:6})
-s6.p.i(5)
-// s6.solo.set(1)
-// s6.e.once()
-
 states[0].map((_,i) => 
   streams[i]
-    .set({cut:i,i})
     .x.v(t => s - (values[t%hits] * s))._
     .y.v(t => amps[t%hits][i] * s)._
     .e.v(t => +states[t%hits][i])._
     .m.n(streams[i].e).$and.every(2)._._
-    .p._vol.cc(4 + (i * 2),10,1)
+    .p._vol.cc(4 + (i * 2),10,0)
 );
 
 z.p.energy.midicc(0,10,0)
 z.p.space.cc(1,10,0)
-z.p.fx0level.cc(2,10,1)
-z.p.fx1level.cc(3,10,1)
+z.p.fx0level.cc(2,10,0)
+z.p.fx1level.cc(3,10,0)
 z.e.set(1)
 z.m.set(1)
 
@@ -37,8 +31,9 @@ fx1.e(1)
 
 s0.set({in:2,ba:'design',res:0.1})
 s0.p.i.random(0,4,1)
+s0.p._vol.mul(0.75)
 s0.px._cutoff.saw(1000,2000).$mul.set(z.p.energy).mtr(1,4)
-s0.p._res.set(z.p.energy).mtr(0.2,0.1)
+s0.p._res.set(z.p.energy).mtr(0.4,0.05)
 s0.px._grainrate.saw(4,12,1)
 s0.px._rate.saw(0.125,1,0.125)
 s0.px._fx0.saw()
@@ -48,9 +43,9 @@ s0.py.dur.saw(4,16,1).btms()
 s0.p._pan.noise()
 s0.p.begin.random().step(1/8)
 s0.m.reset().set(1)
-s0.e.reset().every(q*4)
+// s0.e.reset().every(q*4)
 
-s1.set({in:2,ba:'rumble',dur:ms(16),snap:q*16,n:48,i:4,lag:ms(smoothing),a:10,
+s1.set({in:2,ba:'rumble',dur:ms(16),snap:q*16,n:49,i:4,lag:ms(smoothing),a:10,
 r:500,fx0:1})
 s1.px._cutoff.saw(100,400).$mul.set(z.p.energy).mtr(1,8)
 s1.p._res.set(z.p.energy).mtr(0.5,0.1)
@@ -67,8 +62,7 @@ s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
 s4.e.reset().every(q*4)
 
-s5.set({in:1,ba:'gm.static',dur:ms(2),snap:q*16,i:3,lag:ms(smoothing),
-a:ms(0.25),cut:2,fx0:1,fx1:1})
+s5.set({in:1,ba:'gm.static',dur:ms(2),i:3,lag:ms(smoothing),cut:2,fx0:1,fx1:1})
 s5.px._locut.saw(0.25,0.75)
 s5.py.n.v('Cdor%16..*16')
 s5.px._pan.saw()
