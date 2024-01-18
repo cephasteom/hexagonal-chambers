@@ -3,10 +3,8 @@ let hits = floor(states.length)
 let smoothing = 2
 
 z.bpm.set(180)
-let loop = 3
-// z.seed('18')
+let loop = 4
 z.t.saw(0,q*loop,0,1/loop)
-  // .add(q)
 
 states[0].map((_,i) => 
   streams[i]
@@ -38,16 +36,17 @@ fx1.e(1)
 
 s0.set({inst:'2',bank:'breaks.archn',_snap:q*loop,cut:[3],fx0:1/8,d:ms(1/4),cutr:ms(1/2)})
 s0.p.i.random(0,16,1)
+s0.p._vol.mul(0.75)
 s0.py._grainsize.saw(1/8,1/32)
 s0.py._grainrate.set(32,8).add(4)
 s0.px.begin.noise().gt(0.5).if(0).$else.t().noise().step(0.125)
+s0.p._pan.set(s0.px.begin).eq(0).if(0.5).$else.random(0.25,0.75)
 s0.px.s.saw(0.125,0.75)
 s0.p.dur.set(z.p.energy).mtr(0.25,4).btms()
-// s0.e.$and.every(3)
 s0.mute.noise(0,1).$gt.set(z.p.energy)
 s0.solo.noise(0,1).$lt.set(z.p.energy)
 
-s1.set({in:2,bank:'clap.808',dur:ms(1),cut:[0,2],fx0:0.1})
+s1.set({in:2,bank:'clap.808',dur:ms(1),cut:[0,2]})
 s1.e.reset().set('0*3 1 0*4| 0 | 0 | 0')
 s1.solo.set(s0.e)
 
