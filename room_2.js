@@ -1,4 +1,5 @@
 // ROOM 2
+d.fetch
 const { states, amps, values } = d.book_0
 let hits = floor(states.length)
 let smoothing = 4

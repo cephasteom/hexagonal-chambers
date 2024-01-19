@@ -1,4 +1,9 @@
 // ROOM 4
+d.fetch
+
+s6.set({midi:3,n:21})
+// s6.e.once()
+
 const { states, amps, values } = d.book_3
 let hits = floor(states.length)
 let smoothing = 4

@@ -1,4 +1,10 @@
 // ROOM 6
+d.fetch
+
+s6.set({midi:3,n:6})
+// s6.e.once()
+// s6.solo.set(1)
+
 const { states, amps, values } = d.book_0
 let hits = floor(states.length)
 let smoothing = 2
@@ -51,9 +57,8 @@ s1.set({in:2,bank:'clap.808',dur:ms(1),cut:[0,2]})
 s1.e.reset().set('0*3 1 0*4| 0 | 0 | 0')
 s1.solo.set(s0.e)
 
-// bass
 s2.set({dur:ms(4),r:ms(4),midi:2,mididelay:200,cut:2})
-s2.py.n.set('Dmpent%6..*6').sub(12)
+s2.py.n.set('Dmpent%6..*6').sub(24)
 s2.p._vol.mul(0.25)
 s2.px._cc2.saw(0,0.75)
 s2.py._cc3.saw(1,0.1)
@@ -61,7 +66,6 @@ s2.e.reset().set(s0.e)
 s2.m.reset().set(1)
 s2.solo.set(s0.solo)
 s2.mute.set(s0.mute)
-
 
 s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
@@ -71,3 +75,7 @@ s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
 s4.e.reset().every(q*4)
 s4.solo.set(s0.e)
+
+s6.set({midi:3,n:6})
+// s6.e.once()
+// s6.solo.set(1)
