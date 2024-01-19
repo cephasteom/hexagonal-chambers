@@ -56,7 +56,7 @@ s0.e.$or.every(q*2)
 s0.mute.noise(0,1).$gt.set(z.p.energy)
 s0.solo.noise(0,1).$lt.set(z.p.energy)
 
-s1.set({in:2,ba:'oriki',snap:q,lc:0.75,cut:1,dur:ms(1/16),r:0,dtime:50,dfb:0.85})
+s1.set({in:2,bank:'oriki',snap:q,lc:0.75,cut:1,dur:ms(1/16),r:0,dtime:50,dfb:0.85})
 s1.p.nudge.sine(0,1/8,0,1/6).btms()
 s1.px.res.noise(0.5,0.99,0,1/3)
 s1.px.begin.saw(0,1/64)
@@ -88,13 +88,13 @@ s3.p.n('Dmi').sub(12)
 s3.py._modi.saw(1,2).$mul.set(z.p.energy).mtr(1,4)
 s3.solo.set(s0.solo)
 
-s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1})
+s4.set({in:1,bank:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1})
 s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
 s4.p._vol.$mul.set(2)
 s4.e.reset().every(q)
 
-s5.set({in:1,ba:'atmos',dur:ms(2),i:0,lag:ms(smoothing),
+s5.set({in:1,bank:'atmos',dur:ms(2),i:0,lag:ms(smoothing),
 fx0:1,fx1:1,cutr:ms(0.5),loop:1,level:0.25})
 s5.p._vol.mtr(0,0.5)
 s5.p.n.set('65|60|65')

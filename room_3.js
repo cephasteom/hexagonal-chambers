@@ -37,20 +37,20 @@ fx1.p.dfb(z.p.space)
 fx1.p._level(z.p.fx1level)
 fx1.e(1)
 
-s0.set({in:2,ba:'bd',dur:ms(4),s:0.125,grainrate:32,fx1:0.25,level:0,begin:0.9})
+s0.set({in:2,bank:'bd',dur:ms(4),s:0.125,grainrate:32,fx1:0.25,level:0,begin:0.9})
 s0.p.fx0.set(z.p.energy).mtr(0.5,2)
 s0.p.a.set(z.p.energy).mtr(2,1).btms()
 s0.px.i.random(0,32,1)
 s0.p.rate(-0.5)
 s0.e.$and.every('2?3*16|*2')
 
-s1.set({in:2,ba:'glass',s:0.25,snap:q*2,dur:ms(4),lc:0.5,a:ms(1),de:1,dtime:ms(1/16),dfb:0.8})
+s1.set({in:2,bank:'glass',s:0.25,snap:q*2,dur:ms(4),lc:0.5,a:ms(1),de:1,dtime:ms(1/16),dfb:0.8})
 s1.px.dcolour.set(z.p.energy).mtr(0.5,0.75)
 s1.px.i.noise(0,16,1)
 s1.py.begin.random()
 s1.e.$and.every('1?2*16|*2').$and.not(s0.e)
 
-s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
+s4.set({in:1,bank:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
 s4.px._cutoff.saw(2000,7000).$mul.set(z.p.energy).mtr(0.5,1)
 s4.py._res.saw(0.1,0.9)
@@ -58,7 +58,7 @@ s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
 s4.e.reset().every(q*4)
 
-s5.set({in:1,ba:'gm.static',dur:ms(2),snap:q*32,i:54,lag:ms(smoothing),a:ms(0.25),cut:2,fx0:1,fx1:1})
+s5.set({in:1,bank:'gm.static',dur:ms(2),snap:q*32,i:54,lag:ms(smoothing),a:ms(0.25),cut:2,fx0:1,fx1:1})
 s5.p._vol.mtr(0,0.1)
 s5.py.n.v('Cdor%16..*16')
 s5.px._pan.saw()

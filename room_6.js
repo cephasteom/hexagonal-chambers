@@ -67,7 +67,7 @@ s2.m.reset().set(1)
 s2.solo.set(s0.solo)
 s2.mute.set(s0.mute)
 
-s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
+s4.set({in:1,bank:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
 s4.px._cutoff.saw(2000,7000).$mul.set(z.p.energy).mtr(0.5,1)
 s4.py._res.saw(0.1,1)

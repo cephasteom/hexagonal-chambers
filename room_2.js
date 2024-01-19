@@ -39,7 +39,7 @@ fx1.p._level(z.p.fx1level)
 fx1.e.every(3);
 
 [s3,s4].map((stream,i) => {
-  stream.set({inst:0,ba:'ma.808?bd*16',lag:ms(smoothing),mods:0.1,moda:0,modd:ms(1),s:0.125,r:ms(4),res:0.125,cut:5})
+  stream.set({inst:0,bank:'ma.808?bd*16',lag:ms(smoothing),mods:0.1,moda:0,modd:ms(1),s:0.125,r:ms(4),res:0.125,cut:5})
   stream.p._n(`Daeo%16..?*16|*${loop} Bblyd%16..?*16|*${loop}`).add(0).sub(i*12)
   stream.p._level.add(i*12).noise()
   stream.p._cutoff.set(z.p.space).mtr(5000,2000)
@@ -53,7 +53,7 @@ fx1.e.every(3);
   stream.m.reset().set('1?0*16')
 })
 
-s5.set({in:1,ba:'gm.static',dur:ms(2),i:3,lag:ms(smoothing),fx0:1,fx1:1})
+s5.set({in:1,bank:'gm.static',dur:ms(2),i:3,lag:ms(smoothing),fx0:1,fx1:1})
 s5.py.n.v('Cdor%16..*16')
 s5.px._pan.saw()
 s5.p.begin.saw(0,0.5,0,1/4)
