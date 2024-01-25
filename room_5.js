@@ -44,7 +44,7 @@ s0.p.dur.set(z.p.energy).mtr(4,8).btms()
 s0.px.begin.noise().gt(0.5).if(0).$else.t().noise().step(0.25)
 s0.e.$or.every(q*2)
 
-s1.set({inst:2,bank:'hh2',cut:'0?1*16',lc:0.25,dur:ms(1/16),r:10,dtime:ms(1/8),dcolour:1,dfb:0.75})
+s1.set({inst:2,bank:'hh2',cut:'0?1*16',lc:0.5,dur:ms(1/32),r:10,dtime:ms(1/8),dcolour:0.85,dfb:0.85,n:72})
 s1.p.i.random(0,32,1)
 s1.p._vol.mul(0.5)
 s1.p.amp.random()
