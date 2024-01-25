@@ -1,13 +1,13 @@
 // ROOM 3
 d.fetch
-
-s6.set({midi:3,n:19})
-// s6.e.once()
-
-const { states, amps, values } = d.book_1
+const { states, amps, values } = d.book_0
 let hits = floor(states.length)
-let smoothing = 1
+let smoothing = 4
 let offset = 0
+
+let loop = 3
+z.t.saw(0,q*loop*2,1,1/(loop*2));
+z.q = 16;
 
 states[0].map((_,i) => 
   streams[i]
@@ -20,46 +20,40 @@ states[0].map((_,i) =>
 );
 
 z.p.energy.midicc(0,10,0)
-z.p.space.cc(1,10,0)
+z.p.space.cc(1,10,0.5)
 z.p.fx0level.cc(2,10,1)
 z.p.fx1level.cc(3,10,1)
 z.e.set(1)
 z.m.set(1)
 
-fx0.set({re:1, rsize:0.75, rdamp:0.5,_track:6})
+fx0({reverb:1,rtail:1,vol:0.5,rsize:1,rdamp:0,rspread:1,_track:6})
+fx0.p.level.noise(0.5,1,0,0.433)
 fx0.p.rtail(z.p.space)
 fx0.p._level(z.p.fx0level)
 fx0.e(1)
 
 fx1.set({de:1, _track: 7})
-fx1.p.dtime(z.p.space).mtr(2,0.5).btms()
+fx1.p.dtime.random(0.25,2,0.5).btms()
 fx1.p.dfb(z.p.space)
 fx1.p._level(z.p.fx1level)
-fx1.e(1)
+fx1.e.every(3);
 
-s0.set({in:2,bank:'bd',dur:ms(4),s:0.125,grainrate:32,fx1:0.25,level:0,begin:0.9})
-s0.p.fx0.set(z.p.energy).mtr(0.5,2)
-s0.p.a.set(z.p.energy).mtr(2,1).btms()
-s0.px.i.random(0,32,1)
-s0.p.rate(-0.5)
-s0.e.$and.every('2?3*16|*2')
+[s3,s4].map((stream,i) => {
+  stream.set({inst:i,ba:'ma.808?bd*16',lag:ms(smoothing),mods:0.1,moda:0,modd:ms(1),s:0.125,r:ms(4),res:0.125,cut:5})
+  stream.p._n(`Daeo%16..?*16|*${loop} Bblyd%16..?*16|*${loop}`).add(0).sub(i*12)
+  stream.p._level.add(i*12).noise()
+  stream.p._cutoff.set(z.p.space).mtr(5000,2000)
+  stream.py._pan.saw(0.2,0.8)
+  stream.px._modi.saw(0,10).mul(z.p.energy)
+  stream.py._harm.saw(1,(i+1),1)
+  stream.py.fx0.saw(0.01,0.1)
+  stream.px.fx1.saw(1,0.5)
+  stream.p.i.set(0)
+  stream.p.amp.random(0.25,0.75)
+  stream.m.reset().set('1?0*16')
+})
 
-s1.set({in:2,bank:'glass',s:0.25,snap:q*2,dur:ms(4),lc:0.5,a:ms(1),de:1,dtime:ms(1/16),dfb:0.8})
-s1.px.dcolour.set(z.p.energy).mtr(0.5,0.75)
-s1.px.i.noise(0,16,1)
-s1.py.begin.random()
-s1.e.$and.every('1?2*16|*2').$and.not(s0.e)
-
-s4.set({in:1,bank:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
-fx0:1})
-s4.px._cutoff.saw(2000,7000).$mul.set(z.p.energy).mtr(0.5,1)
-s4.py._res.saw(0.1,0.9)
-s4.py._pan.saw(0.3,0.7)
-s4.p.begin.saw(0,1,0,1/2)
-s4.e.reset().every(q*4)
-
-s5.set({in:1,bank:'gm.static',dur:ms(2),snap:q*32,i:54,lag:ms(smoothing),a:ms(0.25),cut:2,fx0:1,fx1:1})
-s5.p._vol.mtr(0,0.1)
+s5.set({in:1,ba:'gm.static',dur:ms(2),i:3,lag:ms(smoothing),fx0:1,fx1:1})
 s5.py.n.v('Cdor%16..*16')
 s5.px._pan.saw()
 s5.p.begin.saw(0,0.5,0,1/4)

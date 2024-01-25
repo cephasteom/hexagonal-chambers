@@ -5,13 +5,14 @@ s6.set({midi:3,n:6})
 // s6.e.once()
 // s6.solo.set(1)
 
-const { states, amps, values } = d.book_0
+const { states, amps, values } = d.book_0 // 20
 let hits = floor(states.length)
 let smoothing = 2
 
 z.bpm.set(180)
-let loop = 4
+let loop = 4 // 2
 z.t.saw(0,q*loop,0,1/loop)
+  // .add(q)
 
 states[0].map((_,i) => 
   streams[i]
@@ -43,7 +44,7 @@ fx1.e(1)
 
 s0.set({inst:'2',bank:'breaks.archn',_snap:q*loop,cut:[3],fx0:1/8,d:ms(1/4),cutr:ms(1/2)})
 s0.p.i.random(0,16,1)
-s0.p._vol.mul(0.75)
+s0.p._vol.mul(0.6)
 s0.py._grainsize.saw(1/8,1/32)
 s0.py._grainrate.set(32,8).add(4)
 s0.px.begin.noise().gt(0.5).if(0).$else.t().noise().step(0.125)
@@ -55,19 +56,30 @@ s0.solo.noise(0,1).$lt.set(z.p.energy)
 
 s1.set({in:2,bank:'clap.808',dur:ms(1),cut:[0,2]})
 s1.e.reset().set('0*3 1 0*4| 0 | 0 | 0')
-s1.solo.set(s0.e)
+s1.solo.set(s0.e);
 
-s2.set({dur:ms(4),r:ms(4),midi:2,mididelay:200,cut:2})
-s2.py.n.set('Dmpent%6..*6').sub(24)
+// sine bass
+s2.set({inst:6,dur:ms(2),r:ms(4),cut:2})
+s2.py.n.set(38)
 s2.p._vol.mul(0.25)
-s2.px._cc2.saw(0,0.75)
-s2.py._cc3.saw(1,0.1)
 s2.e.reset().set(s0.e)
 s2.m.reset().set(1)
 s2.solo.set(s0.solo)
 s2.mute.set(s0.mute)
 
-s4.set({in:1,bank:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
+// l bass
+s7.set({midi:2,mididelay:200,dur:ms(4)})
+s7.py.n.set('Dmpent%6..*6').sub(24)
+s7.px._cc2.saw(0,0.75)
+s7.py._cc3.saw(1,0.1)
+s7.e.set(s2.e)
+s7.m.set(s2.m)
+s7.x.set(s2.x)
+s7.y.set(s2.y)
+s7.solo.set(s2.solo)
+s7.mute.set(s2.mute)
+
+s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
 s4.px._cutoff.saw(2000,7000).$mul.set(z.p.energy).mtr(0.5,1)
 s4.py._res.saw(0.1,1)
@@ -75,7 +87,3 @@ s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
 s4.e.reset().every(q*4)
 s4.solo.set(s0.e)
-
-s6.set({midi:3,n:6})
-// s6.e.once()
-// s6.solo.set(1)

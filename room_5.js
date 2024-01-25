@@ -53,7 +53,7 @@ s1.p.delay.set(z.p.space).mtr(0,0.75)
 s1.py.pan.noise()
 s1.e.$and.every(1).$and.not(s0.e)
 
-s5.set({in:1,bank:'atmos',dur:ms(2),i:'4?5*16',lag:ms(smoothing),
+s5.set({in:1,ba:'atmos',dur:ms(2),i:'4?5*16',lag:ms(smoothing),
   fx0:1,fx1:1,
   detune: 0.1,
   cutr:ms(0.5),
