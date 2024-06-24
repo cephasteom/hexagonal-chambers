@@ -1,3 +1,4 @@
+d.all
 // PRELOAD
 [s0,s1,s2,s3,s4,s5,fx0,fx1].map(stream => stream.e.every(4))
 
