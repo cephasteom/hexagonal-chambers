@@ -13,18 +13,18 @@ let states = $set(book).fn(o => o.data.states)
 let amps = $set(book).fn(o => o.data.amps)
 let values = $set(book).fn(o => o.data.values)
 
-let energy = $saw(0,1,0,1/section)
-let space = $cc(1,10,0)
+let energy = $saw(0,1,1/section)
+let space = $cc(1,10,0.5)
 let fx0level = $cc(2,10,0.5)
 let fx1level = $cc(3,10,0.5)
 
 streams.slice(0,5).map((s,i) => {
   let t = $t().mod(loop)
-  s.x.set(values).at(t).subr(1)
+  s.x.set(values).at(t).mtr(0,1,-Math.PI,Math.PI).subr(1)
   s.y.set(amps).at(t).at(i)
   s.e.set(states).at(t).at(i)
   s.m.n(s.e).and($every(2))
-  s.p._vol.cc(4 + (i * 2),10,0)
+  s.p._vol.cc(4 + (i * 2),10,1)
 });
 
 fx0.set({re:1, rsize:0.75, rdamp:0.5, _track:6})

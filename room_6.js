@@ -1,60 +1,59 @@
 // ROOM 6
-d.fetch
+// d.fetch('https://zendata.cephasteom.co.uk/api/packets', 'hc')
+// d.fetch('https://zendata.cephasteom.co.uk/api/packet', 'hc_last')
 
-s6.set({midi:3,n:6})
-// s6.e.once()
-// s6.solo.set(1)
+// 0, 10, 20
+const book = d.hc[10]
 
-const { states, amps, values } = d.book_0 // 20
-let hits = floor(states.length)
-let smoothing = 2
+z.bpm.set(160)
 
-z.bpm.set(180)
-let loop = 4 // 2
-z.t.saw(0,q*loop,0,1/loop)
-  // .add(q)
+let hits = book.data.states.length; // length of book
+let smoothing = 4
+let loop = 4
+z.t.saw(0,z.q*loop,1/loop).step(1)
 
-states[0].map((_,i) => 
-  streams[i]
-    .set({cut:i,i})
-    .x.v(t => s - (values[t%hits] * s))._
-    .y.v(t => amps[t%hits][i] * s)._
-    .e.v(t => +states[t%hits][i])._
-    .m.n(streams[i].e).$and.every(2)._._
-    .p._vol.cc(4 + (i * 2),10,1)
-);
+let states = $set(book).fn(o => o.data.states)
+let amps = $set(book).fn(o => o.data.amps)
+let values = $set(book).fn(o => o.data.values)
 
-z.p.energy.midicc(0,10,0)
-z.p.space.cc(1,10,0)
-z.p.fx0level.cc(2,10,1)
-z.p.fx1level.cc(3,10,1)
-z.e.set(1)
-z.m.set(1)
+let energy = $saw(0,1,0.75)
+let space = $cc(1,10,0.5)
+let fx0level = $cc(2,10,0.5)
+let fx1level = $cc(3,10,0.5)
 
-fx0.set({re:1, rsize:0.75, rdamp:0.5,_track:6})
-fx0.p.rtail(z.p.space)
-fx0.p._level(z.p.fx0level)
-fx0.e(1)
+streams.slice(0,6).map((s,i) => {
+  let t = $t().mod(hits)
+  s.x.set(values).at(t).mtr(0,1,-Math.PI,Math.PI).subr(1)
+  s.y.set(amps).at(t).at(i)
+  s.e.set(states).at(t).at(i)
+  s.m.n(s.e).and($every(2))
+  s.p._vol.cc(4 + (i * 2),10,1)
+});
 
-fx1.set({de:1, _track: 7})
-fx1.p.dtime(z.p.space).mtr(1.5,3.5).step(0.5).btms()
-fx1.p.dfb(z.p.space)
-fx1.p._level(z.p.fx1level)
-fx1.e(1)
+fx0.set({re:1, rsize:0.75, rdamp:0.5, _track:6})
+fx0.p.rtail.set(space)
+fx0.p._level.set(fx0level)
+fx0.e.set(1)
 
-s0.set({inst:'2',bank:'breaks.archn',_snap:q*loop,cut:[3],fx0:1/8,d:ms(1/4),cutr:ms(1/2)})
-s0.p.i.random(0,16,1)
+fx1.set({de:1, _track:7})
+fx1.p.dtime.set(space).mtr(1.5,3.5).step(0.5).btms()
+fx1.p.dfb.set(space)
+fx1.p._level.set(fx1level)
+fx1.e.set(1)
+
+s0.set({inst:2,bank:'breaks.archn',_snap:z.q*loop,cut:[3],fx0:1/8,d:ms(1/4),cutr:ms(1/2)})
+s0.p.i.random(0,16).step(1)
 s0.p._vol.mul(0.6)
 s0.py._grainsize.saw(1/8,1/32)
 s0.py._grainrate.set(32,8).add(4)
-s0.px.begin.noise().gt(0.5).if(0).$else.t().noise().step(0.125)
-s0.p._pan.set(s0.px.begin).eq(0).if(0.5).$else.random(0.25,0.75)
+s0.px.begin.noise().gt(0.5).if(0, $noise().step(0.125))
+s0.p._pan.set(s0.px.begin).eq(0).if(0.5, $random(0.25,0.75))
 s0.px.s.saw(0.125,0.75)
-s0.p.dur.set(z.p.energy).mtr(0.25,4).btms()
-s0.mute.noise(0,1).$gt.set(z.p.energy)
-s0.solo.noise(0,1).$lt.set(z.p.energy)
+s0.p.dur.set(energy).mtr(0.25,4).btms()
+s0.mute.noise(0,1).gt(energy)
+s0.solo.noise(0,1).lt(energy)
 
-s1.set({in:2,bank:'clap.808',dur:ms(1),cut:[0,2]})
+s1.set({in:2,bank:'clap808',dur:ms(1),cut:[0,2]})
 s1.e.reset().set('0*3 1 0*4| 0 | 0 | 0')
 s1.solo.set(s0.e);
 
@@ -79,11 +78,11 @@ s7.y.set(s2.y)
 s7.solo.set(s2.solo)
 s7.mute.set(s2.mute)
 
-s4.set({in:1,ba:'air',dur:ms(16),snap:q*2,i:3,lag:ms(smoothing),loop:1,
+s4.set({in:1,ba:'air',dur:ms(16),snap:z.q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
-s4.px._cutoff.saw(2000,7000).$mul.set(z.p.energy).mtr(0.5,1)
+s4.px._cutoff.saw(2000,7000).mul($set(energy).mtr(0.5,1))
 s4.py._res.saw(0.1,1)
 s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
-s4.e.reset().every(q*4)
+s4.e.reset().every(z.q*4)
 s4.solo.set(s0.e)

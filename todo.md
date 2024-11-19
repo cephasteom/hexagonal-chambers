@@ -1,0 +1,6 @@
+- Add hicut/cutoff back in
+- midi controls
+- mix
+- bug when you go from room 0 to room 4
+- room 6 lazer bass
+- vocal samples

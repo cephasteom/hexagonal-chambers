@@ -1,3 +1,4 @@
+// ROOM 2
 // d.fetch('https://zendata.cephasteom.co.uk/api/packets', 'hc')
 // d.fetch('https://zendata.cephasteom.co.uk/api/packet', 'hc_last')
 
@@ -20,7 +21,9 @@ let fx1level = $cc(3,10,0.5)
 
 streams.slice(0,5).map((s,i) => {
   let t = (offset = 0) => $t().add(offset).mod(loop)
-  s.x.set(values).at(t((1 + i) * offset)).subr(1)
+  s.x.set(values).at(t((1 + i) * offset))
+    .mtr(0,1,-Math.PI,Math.PI)
+    .subr(1)
   s.y.set(amps).at(t((1 + i) * offset)).at(i)
   s.e.set(states).at(t((1 + i) * offset)).at(i)
   s.m.n(s.e).and($every(2))
