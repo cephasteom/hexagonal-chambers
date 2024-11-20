@@ -3,7 +3,9 @@
 // d.fetch('https://zendata.cephasteom.co.uk/api/packet', 'hc_last')
 
 // 0, 10, 20
-const book = d.hc[10]
+const book = d.hc[0]
+let mf = 2
+let lb = 1
 
 z.bpm.set(160)
 
@@ -17,9 +19,9 @@ let amps = $set(book).fn(o => o.data.amps)
 let values = $set(book).fn(o => o.data.values)
 
 let energy = $saw(0,1,0.75)
-let space = $cc(1,10,0.5)
-let fx0level = $cc(2,10,0.5)
-let fx1level = $cc(3,10,0.5)
+let space = $cc(1,mf,0.5)
+let fx0level = $cc(2,mf,0.5)
+let fx1level = $cc(3,mf,0.5)
 
 streams.slice(0,6).map((s,i) => {
   let t = $t().mod(hits)
@@ -27,7 +29,7 @@ streams.slice(0,6).map((s,i) => {
   s.y.set(amps).at(t).at(i)
   s.e.set(states).at(t).at(i)
   s.m.n(s.e).and($every(2))
-  s.p._vol.cc(4 + (i * 2),10,1)
+  s.p._vol.cc(4 + (i * 2),mf,1)
 });
 
 fx0.set({re:1, rsize:0.75, rdamp:0.5, _track:6})
@@ -43,7 +45,7 @@ fx1.e.set(1)
 
 s0.set({inst:2,bank:'breaks.archn',_snap:z.q*loop,cut:[3],fx0:1/8,d:ms(1/4),cutr:ms(1/2)})
 s0.p.i.random(0,16).step(1)
-s0.p._vol.mul(0.6)
+s0.p._vol.mul(0.5)
 s0.py._grainsize.saw(1/8,1/32)
 s0.py._grainrate.set(32,8).add(4)
 s0.px.begin.noise().gt(0.5).if(0, $noise().step(0.125))
@@ -54,20 +56,20 @@ s0.mute.noise(0,1).gt(energy)
 s0.solo.noise(0,1).lt(energy)
 
 s1.set({in:2,bank:'clap808',dur:ms(1),cut:[0,2]})
+s1.p._vol.mul(1.75)
 s1.e.reset().set('0*3 1 0*4| 0 | 0 | 0')
-s1.solo.set(s0.e);
+s1.solo.set(s0.e)
 
 // sine bass
-s2.set({inst:6,dur:ms(2),r:ms(4),cut:2})
+s2.set({inst:6,dur:ms(2),r:ms(4),lforate:1,lfodepth:0,fat:0.25,cut:2,cutr:50})
 s2.py.n.set(38)
-s2.p._vol.mul(0.25)
 s2.e.reset().set(s0.e)
 s2.m.reset().set(1)
 s2.solo.set(s0.solo)
 s2.mute.set(s0.mute)
 
 // l bass
-s7.set({midi:2,mididelay:200,dur:ms(4)})
+s7.set({midi:lb,mididelay:200,dur:ms(4)})
 s7.py.n.set('Dmpent%6..*6').sub(24)
 s7.px._cc2.saw(0,0.75)
 s7.py._cc3.saw(1,0.1)
@@ -80,8 +82,6 @@ s7.mute.set(s2.mute)
 
 s4.set({in:1,ba:'air',dur:ms(16),snap:z.q*2,i:3,lag:ms(smoothing),loop:1,
 fx0:1})
-s4.px._cutoff.saw(2000,7000).mul($set(energy).mtr(0.5,1))
-s4.py._res.saw(0.1,1)
 s4.py._pan.saw(0.3,0.7)
 s4.p.begin.saw(0,1,0,1/2)
 s4.e.reset().every(z.q*4)
