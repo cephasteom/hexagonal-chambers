@@ -3,7 +3,7 @@
 // d.fetch('https://zendata.cephasteom.co.uk/api/packet', 'hc_last')
 
 // 0, 10, 20
-const book = d.hc[0]
+const book = d.hc[30]
 let mf = 2
 let lb = 1
 
@@ -11,8 +11,9 @@ z.bpm.set(160)
 
 let hits = book.data.states.length; // length of book
 let smoothing = 4
-let loop = 4
+let loop = 2
 z.t.saw(0,z.q*loop,1/loop).step(1)
+  .add(z.q*4)
 
 let states = $set(book).fn(o => o.data.states)
 let amps = $set(book).fn(o => o.data.amps)
@@ -55,7 +56,7 @@ s0.p.dur.set(energy).mtr(0.25,4).btms()
 s0.mute.noise(0,1).gt(energy)
 s0.solo.noise(0,1).lt(energy)
 
-s1.set({in:2,bank:'clap808',dur:ms(1),cut:[0,2]})
+s1.set({in:2,bank:'clap808',dur:ms(1),cut:[0,2,7]})
 s1.p._vol.mul(1.75)
 s1.e.reset().set('0*3 1 0*4| 0 | 0 | 0')
 s1.solo.set(s0.e)
