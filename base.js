@@ -13,7 +13,7 @@ let states = $set(book).fn(o => o.data.states)
 let amps = $set(book).fn(o => o.data.amps)
 let values = $set(book).fn(o => o.data.values)
 
-let energy = $saw(0,1,1/section)
+let energy = $cc(0,mf,0.75)
 let space = $cc(1,10,0.5)
 let fx0level = $cc(2,10,0.5)
 let fx1level = $cc(3,10,0.5)
